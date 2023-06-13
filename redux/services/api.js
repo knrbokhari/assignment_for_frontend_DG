@@ -15,7 +15,48 @@ export const api = createApi({
                 method: 'GET',
             }),
         }),
+
+        employeeData: builder.mutation({
+            query: () => ({
+                url: 'Employee/EmployeeData',
+                method: 'GET',
+            }),
+        }),
+
+        division: builder.mutation({
+            query: () => ({
+                url: 'Employee/Division',
+                method: 'GET',
+            }),
+        }),
+
+        district: builder.mutation({
+            query: (district) => ({
+                url: `Employee/Division/${district}`,
+                method: 'GET',
+            }),
+        }),
+
+        createEmployee: builder.mutation({
+            query: () => ({
+                url: 'SaveEmployeeInformation',
+                method: 'POST',
+            }),
+        }),
+
+        updateEmployee: builder.mutation({
+            query: (empID) => ({
+                url: `UpdateEmployeeInformation/${empID}`,
+                method: 'PUT',
+            }),
+        }),
     }),
 });
 
-export const { useEmployeeDataMutation } = api
+export const {
+    useEmployeeDataMutation,
+    useDistrictMutation,
+    useDivisionMutation,
+    useCreateEmployeeMutation,
+    useUpdateEmployeeMutation
+} = api
