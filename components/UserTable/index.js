@@ -57,7 +57,7 @@ const UserList = ({ data, employeeType }) => {
 
     return (
         <Container>
-            {employeesData?.length && <MaterialReactTable
+            {!!employeesData?.length && <MaterialReactTable
                 columns={columns}
                 data={employeesData}
                 enableFullScreenToggle={false}

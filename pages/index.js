@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div>
-      <Typography variant="h4" component="h1" align="center">
+      <Typography variant="h4" style={{margin: "20px 0"}} component="h1" align="center">
         User Management System
       </Typography>
       <Tabs value={selectedTab} onChange={handleTabChange} centered>

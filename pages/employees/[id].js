@@ -22,7 +22,7 @@ const EmployeeDetailsPage = () => {
 
     return (
         <Container>
-            <Typography variant='h4' align='center'>Employee Details</Typography>
+            <Typography variant='h4'style={{margin: "20px 0"}} align='center'>Employee Details</Typography>
             <EmployeeDetails employee={data?.readEmployeeData[0]} />
         </Container>
     )
