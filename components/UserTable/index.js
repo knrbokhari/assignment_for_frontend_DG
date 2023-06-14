@@ -2,12 +2,14 @@ import { Box, Button, Container, IconButton, Tooltip } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import { MaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react'
-import { EditUserModal } from '..';
+import { EditUserModal } from '../index';
+import { useRouter } from 'next/router';
 
 const UserList = ({ data, employeeType }) => {
     const [employeesData, setEmployeesData] = useState([]);
     const [open, setOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const router = useRouter();
 
     useEffect(() => {
         setEmployeesData(data?.filter(i => i.employeeType.toLocaleLowerCase() === employeeType))
@@ -50,6 +52,10 @@ const UserList = ({ data, employeeType }) => {
         [],
     );
 
+    const handleDetails = (e) => {
+        router.push(`/employees/${e.getValue('empID')}`)
+    }
+
     return (
         <Container>
             {employeesData?.length && <MaterialReactTable
@@ -58,7 +64,7 @@ const UserList = ({ data, employeeType }) => {
                 enableFullScreenToggle={false}
                 enableDensityToggle={false}
 
-                editingMode="modal"
+                // editingMode="modal"
                 enableColumnOrdering
                 enableEditing
                 // onEditingRowSave={handleSaveRowEdits}
@@ -66,15 +72,8 @@ const UserList = ({ data, employeeType }) => {
                 positionActionsColumn="last"
                 renderRowActions={({ row, table }) => (
                     <Box style={{ display: 'flex', gap: '1rem' }}>
-                        <Tooltip arrow placement="left" title="Edit">
-                            <IconButton onClick={() => table.setEditingRow(row)}>
-                                <Edit />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip arrow placement="right" title="Delete">
-                            <IconButton color="secondary" onClick={() => handleDeleteRow(row)}>
-                                <Delete />
-                            </IconButton>
+                        <Tooltip arrow placement="left" title="Details">
+                            <Button variant='contained' onClick={() => handleDetails(row)}>Details</Button>
                         </Tooltip>
                     </Box>
                 )}
