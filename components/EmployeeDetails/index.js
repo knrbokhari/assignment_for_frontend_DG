@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Card, CardContent, Grid } from '@mui/material';
 import { Button } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import EditUserModal from '../EditUserModal';
 
 const EmployeeDetails = ({ employee }) => {
     const router = useRouter();
+    const [open, setOpen] = useState(false);
 
     return (
         <Card elevation={4} sx={{ mt: 5 }} >
@@ -39,13 +41,20 @@ const EmployeeDetails = ({ employee }) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant='contained' fullWidth  onClick={() => router.push('/')} >Back to Home</Button>
+                        <Button variant='contained' fullWidth onClick={() => router.push('/')} >Back to Home</Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant='contained' fullWidth color='primary'>Update</Button>
+                        <Button variant='contained' fullWidth color='primary' onClick={() => {
+                            setOpen(true)
+                        }}>Update</Button>
                     </Grid>
                 </Grid>
             </CardContent>
+            <EditUserModal
+                open={open}
+                onCloseModal={() => setOpen(!open)}
+                userData={employee}
+            />
         </Card>
     );
 };
