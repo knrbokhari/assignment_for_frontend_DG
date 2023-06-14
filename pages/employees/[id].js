@@ -1,22 +1,27 @@
 import { Container, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import EmployeeDetails from '../../components/EmployeeDetails';
+import { useRouter } from 'next/router';
+import { useIndividualEmployeeMutation } from '../../redux/services/api';
+import { Loading } from '../../components';
 
 const EmployeeDetailsPage = () => {
-    const employee = {
-        empID: 3,
-        firstName: 'Armans',
-        lastName: 'Salehin',
-        employeeType: 'Employee',
-        divisionId: 1,
-        districtId: 2,
-        division: 'Barisal',
-        district: 'Barisal',
-    };
+    const router = useRouter();
+    const [individualEmployee, { error, isLoading, isError, data, success, isSuccess }] =
+    useIndividualEmployeeMutation();
+
+    useEffect(() => {
+        individualEmployee(router?.query?.id)
+    }, [])
+
+    if (isLoading) {
+        return <Loading />
+      }
+
     return (
         <Container>
             <Typography variant='h4' align='center'>Employee Details</Typography>
-            <EmployeeDetails employee={employee} />
+            <EmployeeDetails employee={data?.readEmployeeData[0]} />
         </Container>
     )
 }

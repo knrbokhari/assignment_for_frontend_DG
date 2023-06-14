@@ -1,8 +1,11 @@
 import React from 'react';
 import { Typography, Card, CardContent, Grid } from '@mui/material';
 import { Button } from '@material-ui/core';
+import { useRouter } from 'next/router';
 
 const EmployeeDetails = ({ employee }) => {
+    const router = useRouter();
+
     return (
         <Card elevation={4} sx={{ mt: 5 }} >
             <CardContent>
@@ -35,7 +38,10 @@ const EmployeeDetails = ({ employee }) => {
                             <strong>DistrictId:</strong> {employee?.districtId}
                         </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
+                        <Button variant='contained' fullWidth  onClick={() => router.push('/')} >Back to Home</Button>
+                    </Grid>
+                    <Grid item xs={6}>
                         <Button variant='contained' fullWidth color='primary'>Update</Button>
                     </Grid>
                 </Grid>
