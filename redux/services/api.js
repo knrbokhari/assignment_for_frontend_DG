@@ -23,6 +23,13 @@ export const api = createApi({
             }),
         }),
 
+        individualEmployee: builder.mutation({
+            query: (EmpId) => ({
+                url: `Employee/IndividualEmployeeData/${EmpId}`,
+                method: 'GET',
+            }),
+        }),
+
         division: builder.mutation({
             query: () => ({
                 url: 'Employee/Division',
@@ -57,6 +64,7 @@ export const api = createApi({
 
 export const {
     useEmployeeDataMutation,
+    useIndividualEmployeeMutation,
     useDistrictMutation,
     useDivisionMutation,
     useCreateEmployeeMutation,
