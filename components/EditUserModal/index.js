@@ -1,21 +1,23 @@
-import { Button, Dialog, DialogContent, DialogTitle, Grid, MenuItem, TextField } from '@material-ui/core'
+import { Button, Dialog, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { useCreateEmployeeMutation, useDistrictMutation, useDivisionMutation, useUpdateEmployeeMutation } from '../../redux/services/api';
 import Loading from '../Loading';
 
 const EditUserModal = ({ open, onCloseModal, userData }) => {
     const [divisions, setDivisions] = useState([])
     const [districts, setDistricts] = useState([])
+    const [isEmployee, setIsEmployee] = useState('')
     const [division, { data: divisionData, success, isSuccess: districtSuccess }] = useDivisionMutation();
     const [district, { data: districtData }] = useDistrictMutation();
     const [createEmployee, { isLoading: createLoading }] = useCreateEmployeeMutation();
     const [updateEmployee, { isLoading: updateLoading }] = useUpdateEmployeeMutation();
 
     useEffect(() => {
-        if (!divisionData?.isSuccess) {
+        if (isEmployee === "Employee") {
             division()
+            setIsEmployee(null)
         }
 
         if (divisionData?.isSuccess) {
@@ -26,7 +28,7 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
             setDistricts(districtData?.readDistrictData)
         }
 
-    }, [divisionData?.isSuccess, districtData?.isSuccess])
+    }, [divisionData?.isSuccess, districtData?.isSuccess, isEmployee])
 
     const user = [
         { value: "Admin", label: "Admin" },
@@ -37,7 +39,7 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
         return <Loading />
     }
 
-    const handleCreateAndUpdate = ( data ) => {
+    const handleCreateAndUpdate = (data) => {
         console.log(data)
     }
 
@@ -53,13 +55,23 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
                         divisionId: userData?.divisionId || '',
                         districtId: userData?.districtId || '',
                     }}
-                    validationSchema={Yup.object({
-                        firstName: Yup.string().required('First name is required'),
-                        lastName: Yup.string().required('Last name is required'),
-                        employeeType: Yup.string().required('Employee type is required'),
-                        divisionId: Yup.number().required('Division is required'),
-                        districtId: Yup.number().required('District is required'),
-                    })}
+                    validationSchema={
+                        Yup.object({
+                            firstName: Yup.string().required('First name is required'),
+                            lastName: Yup.string().required('Last name is required'),
+                            employeeType: Yup.string().required('Employee type is required'),
+                            divisionId: Yup.number().when('employeeType', ([employeeType], schema) => {
+                                return employeeType === 'Admin' ? Yup.number() : schema.required('Division is required');
+                            }),
+                            districtId: Yup.number().test('districtId', 'Please select a division first.', function (value) {
+                                const { employeeType, divisionId } = this.parent;
+                                if (employeeType !== 'Admin' && !divisionId) {
+                                    return this.createError({ path: 'districtId', message: 'Please select a division first.' });
+                                }
+                                return true;
+                            }),
+                        })
+                    }
                     onSubmit={async (
                         values,
                         { setErrors, setStatus, setSubmitting }
@@ -109,6 +121,26 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
                                     />
                                 </Grid>
 
+                                <Grid style={{ marginBottom: "20px" }} item xs={12}>
+                                    <TextField
+                                        id="employeeType"
+                                        name="employeeType"
+                                        select
+                                        fullWidth
+                                        label="Employee Type"
+                                        value={values.employeeType}
+                                        onChange={handleChange}
+                                        onClick={(e) => setIsEmployee(e.target.value)}
+                                        error={touched.employeeType && Boolean(errors.employeeType)}
+                                        helperText={touched.employeeType && errors.employeeType}
+                                    >
+                                        {user.map((user) => (
+                                            <MenuItem key={user.value} value={user.value}>
+                                                {user.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
 
                                 <Grid item xs={6}>
                                     <TextField
@@ -116,10 +148,13 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
                                         name="divisionId"
                                         select
                                         fullWidth
+                                        disabled={values.employeeType === "Admin"}
                                         label="Division"
                                         value={values.divisionId}
                                         onClick={(e) => {
-                                            district(e.target.value)
+                                            if (e.target.value) {
+                                                district(e.target.value)
+                                            }
                                         }}
                                         onChange={handleChange}
                                         error={touched.divisionId && Boolean(errors.divisionId)}
@@ -139,6 +174,7 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
                                         name="districtId"
                                         select
                                         fullWidth
+                                        disabled={values.employeeType === "Admin"}
                                         label="District"
                                         value={values.districtId}
                                         onChange={handleChange}
@@ -153,25 +189,7 @@ const EditUserModal = ({ open, onCloseModal, userData }) => {
                                     </TextField>
                                 </Grid>
 
-                                <Grid style={{ marginBottom: "20px" }} item xs={12}>
-                                    <TextField
-                                        id="employeeType"
-                                        name="employeeType"
-                                        select
-                                        fullWidth
-                                        label="Employee Type"
-                                        value={values.employeeType}
-                                        onChange={handleChange}
-                                        error={touched.employeeType && Boolean(errors.employeeType)}
-                                        helperText={touched.employeeType && errors.employeeType}
-                                    >
-                                        {user.map((user) => (
-                                            <MenuItem key={user.value} value={user.value}>
-                                                {user.label}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
+
 
                                 <Grid item xs={6}>
                                     <Button fullWidth size='large' variant="contained" onClick={onCloseModal} color="primary">
