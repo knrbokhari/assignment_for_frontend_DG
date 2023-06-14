@@ -84,6 +84,7 @@ const UserList = ({ data, employeeType }) => {
             />}
             <EditUserModal
                 open={open}
+                setOpen={setOpen}
                 onCloseModal={() => setOpen(!open)}
             />
         </Container>

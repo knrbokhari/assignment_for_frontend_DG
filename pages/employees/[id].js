@@ -8,15 +8,17 @@ import { Loading } from '../../components';
 const EmployeeDetailsPage = () => {
     const router = useRouter();
     const [individualEmployee, { error, isLoading, isError, data, success, isSuccess }] =
-    useIndividualEmployeeMutation();
+        useIndividualEmployeeMutation();
 
     useEffect(() => {
-        individualEmployee(router?.query?.id)
-    }, [])
+        if (router?.query?.id) {
+            individualEmployee(router?.query?.id)
+        }
+    }, [router?.query?.id])
 
     if (isLoading) {
         return <Loading />
-      }
+    }
 
     return (
         <Container>

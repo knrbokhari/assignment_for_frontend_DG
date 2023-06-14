@@ -28,7 +28,7 @@ const EmployeeDetails = ({ employee }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="subtitle1">
-                            <strong>Division:</strong> {employee?.division}
+                            <strong>Division:</strong> {employee?.disvision}
                         </Typography>
                         <Typography variant="subtitle1">
                             <strong>DivisionId:</strong> {employee?.divisionId}
@@ -37,7 +37,7 @@ const EmployeeDetails = ({ employee }) => {
                             <strong>District:</strong> {employee?.district}
                         </Typography>
                         <Typography variant="subtitle1">
-                            <strong>DistrictId:</strong> {employee?.districtId}
+                            <strong>DistrictId:</strong> {employee?.districeID}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -53,6 +53,7 @@ const EmployeeDetails = ({ employee }) => {
             <EditUserModal
                 open={open}
                 onCloseModal={() => setOpen(!open)}
+                setOpen={setOpen}
                 userData={employee}
             />
         </Card>

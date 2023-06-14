@@ -46,7 +46,7 @@ export const api = createApi({
 
         createEmployee: builder.mutation({
             query: (data) => ({
-                url: 'SaveEmployeeInformation',
+                url: 'Employee/SaveEmployeeInformation',
                 method: 'POST',
                 body: data,
             }),
@@ -54,7 +54,7 @@ export const api = createApi({
 
         updateEmployee: builder.mutation({
             query: ({ empID, data }) => ({
-                url: `UpdateEmployeeInformation/${empID}`,
+                url: `Employee/UpdateEmployeeInformation/${empID}`,
                 method: 'PUT',
                 body: data,
             }),
