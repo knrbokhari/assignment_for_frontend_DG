@@ -1,5 +1,4 @@
 import { Box, Button, Container, IconButton, Tooltip } from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
 import { MaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react'
 import { EditUserModal } from '../index';
@@ -63,12 +62,8 @@ const UserList = ({ data, employeeType }) => {
                 data={employeesData}
                 enableFullScreenToggle={false}
                 enableDensityToggle={false}
-
-                // editingMode="modal"
                 enableColumnOrdering
                 enableEditing
-                // onEditingRowSave={handleSaveRowEdits}
-                // onEditingRowCancel={handleCancelRowEdits}
                 positionActionsColumn="last"
                 renderRowActions={({ row, table }) => (
                     <Box style={{ display: 'flex', gap: '1rem' }}>
