@@ -5,7 +5,7 @@ export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_BASE_URL}/api/`,
-        credentials: 'same-origin',
+        // credentials: 'same-origin',
     }),
 
     endpoints: (builder) => ({
@@ -31,23 +31,25 @@ export const api = createApi({
         }),
 
         district: builder.mutation({
-            query: (district) => ({
-                url: `Employee/Division/${district}`,
+            query: (id) => ({
+                url: `Employee/District/${id}`,
                 method: 'GET',
             }),
         }),
 
         createEmployee: builder.mutation({
-            query: () => ({
+            query: (data) => ({
                 url: 'SaveEmployeeInformation',
                 method: 'POST',
+                body: data,
             }),
         }),
 
         updateEmployee: builder.mutation({
-            query: (empID) => ({
+            query: ({ empID, data }) => ({
                 url: `UpdateEmployeeInformation/${empID}`,
                 method: 'PUT',
+                body: data,
             }),
         }),
     }),

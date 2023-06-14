@@ -2,16 +2,16 @@ import { Box, Button, Container, IconButton, Tooltip } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 import { MaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react'
+import { EditUserModal } from '..';
 
 const UserList = ({ data, employeeType }) => {
-    const [admins, setAdmin] = useState([]);
+    const [employeesData, setEmployeesData] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
-        setAdmin(data?.filter(i => i.employeeType.toLocaleLowerCase() === employeeType))
-        console.log(admins)
-
-    }, [data])
-    console.log(admins)
+        setEmployeesData(data?.filter(i => i.employeeType.toLocaleLowerCase() === employeeType))
+    }, [])
 
 
     const columns = useMemo(
@@ -52,9 +52,9 @@ const UserList = ({ data, employeeType }) => {
 
     return (
         <Container>
-            {admins.length && <MaterialReactTable
+            {employeesData?.length && <MaterialReactTable
                 columns={columns}
-                data={admins}
+                data={employeesData}
                 enableFullScreenToggle={false}
                 enableDensityToggle={false}
 
@@ -81,14 +81,17 @@ const UserList = ({ data, employeeType }) => {
                 renderTopToolbarCustomActions={() => (
                     <Button
                         color="primary"
-                        // onClick={() => setCreateModalOpen(true)}
+                        onClick={() => setOpen(true)}
                         variant="contained"
                     >
                         Add A User
                     </Button>
                 )}
             />}
-
+            <EditUserModal
+                open={open}
+                onCloseModal={() => setOpen(!open)}
+            />
         </Container>
     )
 }
