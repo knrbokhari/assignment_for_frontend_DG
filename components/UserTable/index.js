@@ -10,6 +10,7 @@ const UserList = ({ data, employeeType, reload }) => {
     const router = useRouter();
 
     useEffect(() => {
+        // set employees Data based on employee type
         setEmployeesData(data?.filter(i => i.employeeType.toLocaleLowerCase() === employeeType))
     }, [])
 
@@ -50,6 +51,7 @@ const UserList = ({ data, employeeType, reload }) => {
         [],
     );
 
+    // sent to employees details page
     const handleDetails = (e) => {
         router.push(`/employees/${e.getValue('empID')}`)
     }

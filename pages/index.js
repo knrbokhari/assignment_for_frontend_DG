@@ -10,6 +10,7 @@ export default function Home() {
     useEmployeeDataMutation();
 
   useEffect(() => {
+    // fetch Employee data
     if (!isSuccess || reload) {
       employeeData();
     }
@@ -20,6 +21,7 @@ export default function Home() {
     return <Loading />
   }
 
+  // handle Tab Change
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
     setReload(true)

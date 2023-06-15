@@ -19,19 +19,23 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
     const [updateEmployee, { isLoading: updateLoading, isSuccess: userUpdated }] = useUpdateEmployeeMutation();
 
     useEffect(() => {
+        // if isEmployee are equal to employees then fetch division data
         if (isEmployee === "Employee") {
             division()
             setIsEmployee(null)
         }
 
+        // set divisions data  
         if (divisionData?.isSuccess) {
             setDivisions(divisionData?.readDivisionData)
         }
 
+        // set districts data
         if (districtData?.isSuccess) {
             setDistricts(districtData?.readDistrictData)
         }
 
+        // send success message for create and update
         if (userCreated || userUpdated) {
             toast.success(userData ? "User Updated" : " User Added")
             router.push('/')
@@ -52,10 +56,12 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
         { value: "Employee", label: "Employee" }
     ]
 
+    // if user is updated then sent to home route 
     if (userUpdated) {
         router.push('/')
     }
 
+    // if user is updated then refetch Employee data
     if (userCreated) {
         reload(true)
     }
@@ -64,6 +70,7 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
         return <Loading />
     }
 
+    // handle Create And Update 
     const handleCreateAndUpdate = (data) => {
         if (userData) {
             updateEmployee({ empID: userData.empID, data: data })

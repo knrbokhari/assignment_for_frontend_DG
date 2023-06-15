@@ -11,6 +11,7 @@ const EmployeeDetailsPage = () => {
         useIndividualEmployeeMutation();
 
     useEffect(() => {
+        // fetch individual Employee data
         if (router?.query?.id && !isSuccess) {
             individualEmployee(router?.query?.id)
         }
