@@ -5,17 +5,17 @@ import { Loading, UserTable } from '../components';
 
 export default function Home() {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(true);
   const [employeeData, { error, isLoading, isError, data, success, isSuccess }] =
     useEmployeeDataMutation();
 
   useEffect(() => {
     // fetch Employee data
-    if (!isSuccess || reload) {
+    if (reload) {
       employeeData();
     }
     setReload(false)
-  }, [employeeData, reload]);
+  }, [reload]);
 
   if (isLoading) {
     return <Loading />
