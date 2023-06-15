@@ -46,7 +46,7 @@ const EmployeeDetails = ({ employee }) => {
                     <Grid item xs={6}>
                         <Button variant='contained' fullWidth color='primary' onClick={() => {
                             setOpen(true)
-                        }}>Update</Button>
+                        }}>Edit</Button>
                     </Grid>
                 </Grid>
             </CardContent>

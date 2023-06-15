@@ -7,7 +7,7 @@ import Loading from '../Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-const EditUserModal = ({ open, onCloseModal, userData, setOpen }) => {
+const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
     const router = useRouter();
     const [divisions, setDivisions] = useState([])
     const [districts, setDistricts] = useState([])
@@ -55,6 +55,10 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen }) => {
         router.push('/')
     }
 
+    if (userCreated) {
+        reload(true)
+    }
+
     if (createLoading || updateLoading) {
         return <Loading />
     }
@@ -77,8 +81,8 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen }) => {
                             firstName: userData?.firstName || '',
                             lastName: userData?.lastName || '',
                             employeeType: userData?.employeeType || '',
-                            divisionId: userData?.divisionId || '',
-                            districeID: userData?.districeID || '',
+                            divisionId: userData?.divisionId || 0,
+                            districeID: userData?.districeID || 0,
                         }}
                         validationSchema={
                             Yup.object({
@@ -146,7 +150,7 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen }) => {
                                         />
                                     </Grid>
 
-                                    <Grid style={{ marginBottom: "20px" }} item xs={12}>
+                                    <Grid item xs={12}>
                                         <TextField
                                             id="employeeType"
                                             name="employeeType"

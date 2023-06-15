@@ -11,10 +11,10 @@ const EmployeeDetailsPage = () => {
         useIndividualEmployeeMutation();
 
     useEffect(() => {
-        if (router?.query?.id) {
+        if (router?.query?.id && !isSuccess) {
             individualEmployee(router?.query?.id)
         }
-    }, [router?.query?.id])
+    }, [individualEmployee, router?.query?.id, isSuccess])
 
     if (isLoading) {
         return <Loading />

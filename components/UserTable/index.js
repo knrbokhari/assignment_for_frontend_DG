@@ -4,10 +4,9 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { EditUserModal } from '../index';
 import { useRouter } from 'next/router';
 
-const UserList = ({ data, employeeType }) => {
+const UserList = ({ data, employeeType, reload }) => {
     const [employeesData, setEmployeesData] = useState([]);
     const [open, setOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -85,6 +84,7 @@ const UserList = ({ data, employeeType }) => {
             <EditUserModal
                 open={open}
                 setOpen={setOpen}
+                reload={reload}
                 onCloseModal={() => setOpen(!open)}
             />
         </Container>
