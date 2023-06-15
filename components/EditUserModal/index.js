@@ -6,6 +6,7 @@ import { useCreateEmployeeMutation, useDistrictMutation, useDivisionMutation, us
 import Loading from '../Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { CustomButton } from '../index';
 
 const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
     const router = useRouter();
@@ -217,14 +218,14 @@ const EditUserModal = ({ open, onCloseModal, userData, setOpen, reload }) => {
                                     </Grid>
 
                                     <Grid item xs={6}>
-                                        <Button fullWidth size='large' variant="contained" onClick={onCloseModal} color="primary">
+                                        <Button fullWidth size='large' variant="contained" onClick={onCloseModal} color="secondary">
                                             Cancel
                                         </Button>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <Button fullWidth size='large' variant="contained" type="submit" disabled={isSubmitting} color="primary">
+                                        <CustomButton fullWidth size='large' variant="contained" type="submit" disabled={isSubmitting}>
                                             {userData ? 'Update' : 'Save'}
-                                        </Button>
+                                        </CustomButton>
                                     </Grid>
                                 </Grid>
                             </Form>

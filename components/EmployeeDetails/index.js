@@ -41,7 +41,7 @@ const EmployeeDetails = ({ employee }) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant='contained' fullWidth onClick={() => router.push('/')} >Back to Home</Button>
+                        <Button variant='contained' color='secondary' fullWidth onClick={() => router.push('/')} >Back to Home</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant='contained' fullWidth color='primary' onClick={() => {

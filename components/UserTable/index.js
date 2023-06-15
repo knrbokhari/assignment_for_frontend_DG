@@ -1,7 +1,7 @@
 import { Box, Button, Container, IconButton, Tooltip } from '@material-ui/core';
 import { MaterialReactTable } from 'material-react-table';
 import React, { useEffect, useMemo, useState } from 'react'
-import { EditUserModal } from '../index';
+import { CustomButton, EditUserModal } from '../index';
 import { useRouter } from 'next/router';
 
 const UserList = ({ data, employeeType, reload }) => {
@@ -67,18 +67,18 @@ const UserList = ({ data, employeeType, reload }) => {
                 renderRowActions={({ row, table }) => (
                     <Box style={{ display: 'flex', gap: '1rem' }}>
                         <Tooltip arrow placement="left" title="Details">
-                            <Button variant='contained' onClick={() => handleDetails(row)}>Details</Button>
+                            <Button variant='contained' color="primary" onClick={() => handleDetails(row)}>Details</Button>
                         </Tooltip>
                     </Box>
                 )}
                 renderTopToolbarCustomActions={() => (
-                    <Button
+                    <CustomButton
                         color="primary"
                         onClick={() => setOpen(true)}
                         variant="contained"
                     >
                         Add A User
-                    </Button>
+                    </CustomButton>
                 )}
             />}
             <EditUserModal
