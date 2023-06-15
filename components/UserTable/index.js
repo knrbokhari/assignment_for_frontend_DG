@@ -38,13 +38,13 @@ const UserList = ({ data, employeeType, reload }) => {
                 size: 150,
             },
             {
-                accessorKey: 'district',
-                header: 'District',
+                accessorKey: 'disvision',
+                header: 'Disvision',
                 size: 150,
             },
             {
-                accessorKey: 'disvision',
-                header: 'Disvision',
+                accessorKey: 'district',
+                header: 'District',
                 size: 150,
             },
         ],
